@@ -1,0 +1,8 @@
+name: ParryHotter
+version: '${project.version}'
+main: io.github.madmowgli.parryhotter.ParryHotter
+api-version: 1.18
+prefix: PARRY_HOTTER
+authors: [ MadMowgli ]
+description: A plugin that lets you experience magic in Minecraft.
+website: https://github.com/MadMowgli
