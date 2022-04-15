@@ -18,7 +18,10 @@ public abstract class Spellbook {
 
     // Methods
     public String getName() { return this.name; }
-    public School getFlavour() { return this.school; }
+    public School getSchool() { return this.school; }
     public long getCoolDown() { return this.coolDown; }
+    public Class<? extends Projectile> getProjectile() { return this.school.projectile; }
+
+
 
 }
