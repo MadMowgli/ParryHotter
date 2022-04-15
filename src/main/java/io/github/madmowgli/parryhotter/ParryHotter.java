@@ -5,7 +5,12 @@ import io.github.madmowgli.parryhotter.listeners.ClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+
 public final class ParryHotter extends JavaPlugin {
+
+    // Vars
+    public volatile HashMap<String, Long> cooldowns = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -20,7 +25,7 @@ public final class ParryHotter extends JavaPlugin {
         }
 
         // Add event listener
-        this.getServer().getPluginManager().registerEvents(new ClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ClickListener(this), this);
 
     }
 

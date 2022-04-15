@@ -1,5 +1,6 @@
 package io.github.madmowgli.parryhotter.listeners;
 
+import io.github.madmowgli.parryhotter.ParryHotter;
 import io.github.madmowgli.parryhotter.blueprints.MagicWand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +31,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ClickListener implements Listener {
 
+    // Vars
+    private final ParryHotter parent;
+
+    // Constructor for dependency injection
+    public ClickListener(ParryHotter parent) {
+        this.parent = parent;
+    }
+
     // Event handler
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
@@ -38,20 +47,31 @@ public class ClickListener implements Listener {
         if(event.getItem() != null) {
             if(event.getItem().getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Magic Wand")) {
 
-                JavaPlugin parent = (JavaPlugin) Bukkit.getPluginManager().getPlugin("ParryHotter");
-                parent.getLogger().info("Magic wand event triggered!");
-                parent.getLogger().info("Button clicked: " + event.getAction());
-
                 // Grab data
-                boolean castedFromMainHand = event.getHand() == EquipmentSlot.HAND;
-                boolean castedFromOffHand = event.getHand() == EquipmentSlot.OFF_HAND;
+                String playerUUID = event.getPlayer().getUniqueId().toString();
 
                 // Left click to air event
-                if(event.getAction() == Action.LEFT_CLICK_AIR) {
-                    event.getPlayer().launchProjectile(Arrow.class);
+                if(event.getAction() == Action.LEFT_CLICK_AIR || (event.getAction() == Action.LEFT_CLICK_BLOCK)) {
+
+                    // Valid cooldown
+                    if(parent.cooldowns.containsKey(playerUUID)
+                            && (System.currentTimeMillis() - parent.cooldowns.get(playerUUID)) > (long) 759) {
+                        event.getPlayer().launchProjectile(Arrow.class);
+                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                    }
+
+                    // First time shooter
+                    else if (!parent.cooldowns.containsKey(playerUUID)) {
+                        event.getPlayer().launchProjectile(Arrow.class);
+                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                    }
+                }
+
+                // Prevent wand from being placed
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    event.setCancelled(true);
                 }
             }
         }
     }
-
 }
