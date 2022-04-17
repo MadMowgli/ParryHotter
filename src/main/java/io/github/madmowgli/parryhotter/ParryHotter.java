@@ -7,30 +7,20 @@ import io.github.madmowgli.parryhotter.listeners.ClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.A;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 public final class ParryHotter extends JavaPlugin {
 
     // Vars
-    public volatile HashMap<String, Long> cooldowns = new HashMap<>();
-    private final BookOfWater bookOfWater = new BookOfWater();
-    private final BookOfFire bookOfFire = new BookOfFire();
-    private final BookOfLightning bookOfLightning = new BookOfLightning();
-    private final BookOfSpectra bookOfSpectra = new BookOfSpectra();
-    private final BookOfDeath bookOfDeath = new BookOfDeath();
-    public ArrayList<Spellbook> spellBooks = new ArrayList<>(Arrays.asList(
-            bookOfWater, bookOfFire, bookOfLightning, bookOfSpectra, bookOfDeath
-    ));
-    public ArrayList<ItemStack> spellBookItemStacks = new ArrayList<>(Arrays.asList(
-            bookOfWater.getItemStack(), bookOfFire.getItemStack(), bookOfLightning.getItemStack(),
-            bookOfSpectra.getItemStack(), bookOfDeath.getItemStack()
-    ));
+    private final BookOfWater bookOfWater = new BookOfWater(this);
+    private final BookOfFire bookOfFire = new BookOfFire(this);
+    private final BookOfLightning bookOfLightning = new BookOfLightning(this);
+    private final BookOfSpectra bookOfSpectra = new BookOfSpectra(this);
+    private final BookOfDeath bookOfDeath = new BookOfDeath(this);
+
     public HashMap<ItemStack, Spellbook> bookMap = new HashMap<ItemStack, Spellbook>();
+    public volatile HashMap<String, Long> coolDowns = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -44,11 +34,10 @@ public final class ParryHotter extends JavaPlugin {
         bookMap.put(bookOfSpectra.getItemStack(), bookOfSpectra);
         bookMap.put(bookOfDeath.getItemStack(), bookOfDeath);
 
-        // Add recipe
-        try {
-            Bukkit.addRecipe(MagicWand.getMagicWandRecipe(this));
-        } catch (Exception e) {
-            this.getLogger().severe("Couldn't load recipe: " + e.getMessage());
+        // Add Recipes
+        Bukkit.addRecipe(MagicWand.getMagicWandRecipe(this));
+        for (Spellbook spellbook : bookMap.values()) {
+            Bukkit.addRecipe(spellbook.getShapedRecipe());
         }
 
         // Add event listener

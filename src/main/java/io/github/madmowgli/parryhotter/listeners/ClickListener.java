@@ -59,16 +59,16 @@ public class ClickListener implements Listener {
                 if(playerAction == Action.LEFT_CLICK_AIR || (playerAction == Action.LEFT_CLICK_BLOCK)) {
 
                     // Valid cooldown
-                    if(parent.cooldowns.containsKey(playerUUID)
-                            && (System.currentTimeMillis() - parent.cooldowns.get(playerUUID)) > (long) 759) {
+                    if(parent.coolDowns.containsKey(playerUUID)
+                            && (System.currentTimeMillis() - parent.coolDowns.get(playerUUID)) > (long) 759) {
                         event.getPlayer().launchProjectile(Arrow.class);
-                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                        parent.coolDowns.put(playerUUID, System.currentTimeMillis());
                     }
 
                     // First time shooter
-                    else if (!parent.cooldowns.containsKey(playerUUID)) {
+                    else if (!parent.coolDowns.containsKey(playerUUID)) {
                         event.getPlayer().launchProjectile(Arrow.class);
-                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                        parent.coolDowns.put(playerUUID, System.currentTimeMillis());
                     }
                 }
 
@@ -79,15 +79,15 @@ public class ClickListener implements Listener {
                     Spellbook spellbook = parent.bookMap.get(offHandItem);
 
                     // Check cooldown
-                    if((System.currentTimeMillis() - parent.cooldowns.get(playerUUID)) > spellbook.getCoolDown()) {
+                    if((System.currentTimeMillis() - parent.coolDowns.get(playerUUID)) > spellbook.getCoolDown()) {
                         event.getPlayer().launchProjectile(spellbook.getProjectile());
-                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                        parent.coolDowns.put(playerUUID, System.currentTimeMillis());
                     }
 
                     // First time shooter
-                    else if (!parent.cooldowns.containsKey(playerUUID)) {
+                    else if (!parent.coolDowns.containsKey(playerUUID)) {
                         event.getPlayer().launchProjectile(spellbook.getProjectile());
-                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                        parent.coolDowns.put(playerUUID, System.currentTimeMillis());
                     }
 
                 }

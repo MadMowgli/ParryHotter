@@ -33,7 +33,7 @@ public class MagicWand {
         magicWandRecipe.shape(" R ", " S ", " S ");
         magicWandRecipe.setIngredient('R', Material.REDSTONE);
         magicWandRecipe.setIngredient('S', Material.STICK);
-        magicWand.setItemMeta(magicWandMeta);
+//        magicWand.setItemMeta(magicWandMeta);
 
         return magicWandRecipe;
     }
