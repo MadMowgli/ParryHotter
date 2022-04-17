@@ -1,17 +1,14 @@
 package io.github.madmowgli.parryhotter.listeners;
 
 import io.github.madmowgli.parryhotter.ParryHotter;
-import io.github.madmowgli.parryhotter.blueprints.MagicWand;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.inventory.ItemStack;
+import io.github.madmowgli.parryhotter.blueprints.Spellbook;
 
     /*
      /  We listen for both right- and left clicks when wielding the wand (either in main- or offhand)
@@ -47,11 +44,19 @@ public class ClickListener implements Listener {
         if(event.getItem() != null) {
             if(event.getItem().getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Magic Wand")) {
 
-                // Grab data
+                // Grab name
                 String playerUUID = event.getPlayer().getUniqueId().toString();
+                Action playerAction = event.getAction();
+                ItemStack mainHandItem = event.getPlayer().getInventory().getItemInMainHand();
+                ItemStack offHandItem = event.getPlayer().getInventory().getItemInOffHand();
 
-                // Left click to air event
-                if(event.getAction() == Action.LEFT_CLICK_AIR || (event.getAction() == Action.LEFT_CLICK_BLOCK)) {
+                // Prevent wand from being placed
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    event.setCancelled(true);
+                }
+
+                // Left click (with or without spell book)
+                if(playerAction == Action.LEFT_CLICK_AIR || (playerAction == Action.LEFT_CLICK_BLOCK)) {
 
                     // Valid cooldown
                     if(parent.cooldowns.containsKey(playerUUID)
@@ -67,10 +72,26 @@ public class ClickListener implements Listener {
                     }
                 }
 
-                // Prevent wand from being placed
-                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    event.setCancelled(true);
+                // Right click with spell book
+                if(playerAction == Action.RIGHT_CLICK_AIR || playerAction == Action.RIGHT_CLICK_BLOCK
+                && parent.bookMap.containsKey(offHandItem)) {
+
+                    Spellbook spellbook = parent.bookMap.get(offHandItem);
+
+                    // Check cooldown
+                    if((System.currentTimeMillis() - parent.cooldowns.get(playerUUID)) > spellbook.getCoolDown()) {
+                        event.getPlayer().launchProjectile(spellbook.getProjectile());
+                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                    }
+
+                    // First time shooter
+                    else if (!parent.cooldowns.containsKey(playerUUID)) {
+                        event.getPlayer().launchProjectile(spellbook.getProjectile());
+                        parent.cooldowns.put(playerUUID, System.currentTimeMillis());
+                    }
+
                 }
+
             }
         }
     }
