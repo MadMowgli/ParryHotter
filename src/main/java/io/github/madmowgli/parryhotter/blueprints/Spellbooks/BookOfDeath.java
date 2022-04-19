@@ -16,7 +16,7 @@ public class BookOfDeath extends Spellbook {
 
     // Constructor
     public BookOfDeath(JavaPlugin parent) {
-        super("Book of Death", School.DEATH, 3500);
+        super("Book of Death", School.DEATH, 3100);
 
         // Create ItemStack
         ItemStack bookOfDeath = new ItemStack(Material.BOOK);
@@ -24,7 +24,7 @@ public class BookOfDeath extends Spellbook {
 
         // Item Meta
         ItemMeta bookOfDeathItemMeta = bookOfDeath.getItemMeta();
-        bookOfDeathItemMeta.setDisplayName(ChatColor.BLACK + "Spellbook of Death");
+        bookOfDeathItemMeta.setDisplayName(ChatColor.WHITE + "Spellbook of Death");
         ArrayList<String> bookOfDeathLore = new ArrayList<>();
         bookOfDeathLore.add("The assassins were themselves,");
         bookOfDeathLore.add("once Tarnished who had strayed from guidance,");

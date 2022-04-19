@@ -16,7 +16,7 @@ public class BookOfFire extends Spellbook {
 
     // Constructor
     public BookOfFire(JavaPlugin parent) {
-        super("Book of Fire", School.FIRE, 4600);
+        super("Book of Fire", School.FIRE, 3500);
 
         // Create ItemStack
         ItemStack bookOfFire = new ItemStack(Material.BOOK);
