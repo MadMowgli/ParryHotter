@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class ImpactListener implements Listener {
 
@@ -22,8 +23,26 @@ public class ImpactListener implements Listener {
 
         // Only listen for egg events
         if(projectileHitEvent.getEntity() instanceof Egg) {
-            Player player = (Player) projectileHitEvent.getEntity().getShooter();
-            parent.getLogger().info("Shooter: " + player.getDisplayName());
+            try {
+                Player player = (Player) projectileHitEvent.getEntity().getShooter();
+                ItemStack offHandItem = player.getInventory().getItemInOffHand();
+
+                // Only cast if player has spellbook equipped
+                if(parent.bookMap.containsKey(offHandItem)) {
+
+                    // Player hit block
+                    try {
+                        player.getWorld().strikeLightning(projectileHitEvent.getHitBlock().getLocation());
+                    } catch (Exception e) {
+
+                        // Player hit another entity
+                        player.getWorld().strikeLightning(projectileHitEvent.getHitEntity().getLocation());
+                    }
+                }
+            } catch (Exception e) {
+                parent.getLogger().severe("Exception: " + e.getMessage());
+            }
+
         }
 
     }
