@@ -4,6 +4,7 @@ import io.github.madmowgli.parryhotter.blueprints.MagicWand;
 import io.github.madmowgli.parryhotter.blueprints.Spellbook;
 import io.github.madmowgli.parryhotter.blueprints.Spellbooks.*;
 import io.github.madmowgli.parryhotter.listeners.ClickListener;
+import io.github.madmowgli.parryhotter.listeners.ImpactListener;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +43,7 @@ public final class ParryHotter extends JavaPlugin {
 
         // Add event listener
         this.getServer().getPluginManager().registerEvents(new ClickListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new ImpactListener(this), this);
 
     }
 

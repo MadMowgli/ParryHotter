@@ -74,13 +74,13 @@ public class ClickListener implements Listener {
                 }
 
                 // Right click with spell book
-                if(playerAction == Action.RIGHT_CLICK_AIR || playerAction == Action.RIGHT_CLICK_BLOCK
-                && parent.bookMap.containsKey(offHandItem)) {
+                if(playerAction == Action.RIGHT_CLICK_AIR && parent.bookMap.containsKey(offHandItem)) {
 
                     Spellbook spellbook = parent.bookMap.get(offHandItem);
 
                     // Check cooldown
-                    if((System.currentTimeMillis() - parent.coolDowns.get(playerUUID)) > spellbook.getCoolDown()) {
+                    if(parent.coolDowns.containsKey(playerUUID)
+                            && (System.currentTimeMillis() - parent.coolDowns.get(playerUUID)) > spellbook.getCoolDown()) {
                         event.getPlayer().launchProjectile(spellbook.getProjectile());
                         parent.coolDowns.put(playerUUID, System.currentTimeMillis());
                     }
