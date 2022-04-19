@@ -16,7 +16,7 @@ public class BookOfSpectra extends Spellbook {
 
     // Constructor
     public BookOfSpectra(JavaPlugin parent) {
-        super("Book of Spectra", School.SPECTRAL, 1250);
+        super("Book of Spectra", School.SPECTRAL, 1800);
 
         // Create ItemStack
         ItemStack bookOfSpectra = new ItemStack(Material.BOOK);
@@ -26,7 +26,8 @@ public class BookOfSpectra extends Spellbook {
         ItemMeta bookOfSpectraItemMeta = bookOfSpectra.getItemMeta();
         bookOfSpectraItemMeta.setDisplayName(ChatColor.DARK_PURPLE + "Spellbook of Spectra");
         ArrayList<String> bookOfSpectraLore = new ArrayList<>();
-        bookOfSpectraLore.add("The assassins were charged with eliminating Tarnished,");
+        bookOfSpectraLore.add("The assassins were charged,");
+        bookOfSpectraLore.add("with eliminating Tarnished,");
         bookOfSpectraLore.add("who had strayed from guidance.");
         bookOfSpectraItemMeta.setLore(bookOfSpectraLore);
         bookOfSpectra.setItemMeta(bookOfSpectraItemMeta);

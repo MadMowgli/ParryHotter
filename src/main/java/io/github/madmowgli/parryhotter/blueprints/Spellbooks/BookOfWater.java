@@ -26,8 +26,10 @@ public class BookOfWater extends Spellbook {
         ItemMeta bookOfWaterItemMeta = bookOfWater.getItemMeta();
         bookOfWaterItemMeta.setDisplayName(ChatColor.BLUE + "Spellbook of Water");
         ArrayList<String> bookOfWaterLore = new ArrayList<>();
-        bookOfWaterLore.add("The ice dragons were once lords of the mountaintops long ago,");
-        bookOfWaterLore.add("until they were defeated by the Fire Giants and chased from the peak.");
+        bookOfWaterLore.add("The ice dragons were once,");
+        bookOfWaterLore.add("lords of the mountaintops long ago,");
+        bookOfWaterLore.add("until they were defeated by the Fire Giants,");
+        bookOfWaterLore.add("and chased from the peak.");
         bookOfWaterItemMeta.setLore(bookOfWaterLore);
         bookOfWater.setItemMeta(bookOfWaterItemMeta);
         this.setItemStack(bookOfWater);

@@ -16,7 +16,7 @@ public class BookOfFire extends Spellbook {
 
     // Constructor
     public BookOfFire(JavaPlugin parent) {
-        super("Book of Fire", School.FIRE, 2500);
+        super("Book of Fire", School.FIRE, 4600);
 
         // Create ItemStack
         ItemStack bookOfFire = new ItemStack(Material.BOOK);
@@ -26,8 +26,10 @@ public class BookOfFire extends Spellbook {
         ItemMeta bookOfFireItemMeta = bookOfFire.getItemMeta();
         bookOfFireItemMeta.setDisplayName(ChatColor.DARK_RED + "Spellbook of Fire");
         ArrayList<String> bookOfFireLore = new ArrayList<>();
-        bookOfFireLore.add("Arghanthy, the chief guardian of the Flame, had kept this incantation a well-kept secret,");
-        bookOfFireLore.add("until it was stolen by Adan. The fell god still lurks within the Fire Giants.");
+        bookOfFireLore.add("Arghanthy, the chief guardian of the Flame,");
+        bookOfFireLore.add("had kept this incantation a well-kept secret,");
+        bookOfFireLore.add("until it was stolen by Adan.");
+        bookOfFireLore.add("The fell god still lurks within the Fire Giants");
         bookOfFireItemMeta.setLore(bookOfFireLore);
         bookOfFire.setItemMeta(bookOfFireItemMeta);
         this.setItemStack(bookOfFire);
