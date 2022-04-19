@@ -4,6 +4,7 @@ import io.github.madmowgli.parryhotter.ParryHotter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -37,7 +38,7 @@ public class ClickListener implements Listener {
     }
 
     // Event handler
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(PlayerInteractEvent event) {
 
         // Only listen for events related to our magic wand
